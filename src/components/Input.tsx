@@ -5,7 +5,7 @@ type InputProps = {
   className?: string;
 } & InputHTMLAttributes<HTMLInputElement>;
 
-const Input = React.forwardRef<HTMLInputElement, InputProps>(function Input(
+const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
   { label, type = "text", className = "", ...props },
   ref,
 ) {

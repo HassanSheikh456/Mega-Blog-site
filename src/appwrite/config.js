@@ -1,7 +1,10 @@
-import { conf } from "../conf/";
+import conf from "../conf/conf";
 import { Client, ID, Databases, Storage, Query } from "appwrite";
 
 export class Service {
+  logout() {
+    throw new Error("Method not implemented.");
+  }
   client = new Client();
   databases;
   bucket;
@@ -10,7 +13,8 @@ export class Service {
     this.client
       .setEndpoint(conf.appwriteUrl)
       .setProject(conf.appwriteProjectId);
-
+      
+    this.account = new Account(this.client);
     this.databases = new Databases(this.client);
     this.bucket = new Storage(this.client);
   }
@@ -18,7 +22,7 @@ export class Service {
   async createPost({ title, slug, content, featuredImage, status, userID }) {
     try {
       return await this.databases.createDocument({
-        databaseId: conf.appwriteDatebaseId,
+        databaseId: conf.appwriteDatabaseId,
         collectionId: conf.appwriteCollectionId,
         documentId: slug,
         data: {
@@ -38,7 +42,7 @@ export class Service {
   async updatePost(slug, { title, content, featuredImage, status }) {
     try {
       return await this.databases.updateDocument({
-        databaseId: conf.appwriteDatebaseId,
+        databaseId: conf.appwriteDatabaseId,
         collectionId: conf.appwriteCollectionId,
         documentId: slug,
         data: {

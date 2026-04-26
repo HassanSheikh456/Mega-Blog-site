@@ -3,21 +3,34 @@ import appwriteServices from "../appwrite/config";
 import { Link } from "react-router-dom";
 import Image from "next/image";
 
-type cardProps = {
+
+type Post = {
   $id: string;
   title: string;
-  featuredImage: string;
+  slug: string;
+  content: string;
+  featuredImage?: string;
 };
 
-const PostCard = ({ $id, title, featuredImage }: cardProps) => {
+type CardProps = {
+  post: Post;
+};
+
+
+
+
+const PostCard = ({post }: CardProps) => {
   return (
-    <Link to={`/post/${$id}`}>
+    <Link to={`/post/${post.$id}`}>
       <div className="w-full bg-gray-100 rounded-xl p-4">
         <div className="w-full justify-center mb-4">
-          <Image alt={title} src={appwriteServices.getFilePreview(featuredImage)}
-          className="rounded-xl" />
+          <Image
+            alt={post.title}
+            src={appwriteServices.getFilePreview(post.featuredImage)}
+            className="rounded-xl"
+          />
         </div>
-        <h2 className="text-xl font-bold">{title}</h2>
+        <h2 className="text-xl font-bold">{post.title}</h2>
       </div>
     </Link>
   );
